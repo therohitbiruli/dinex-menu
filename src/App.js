@@ -18,6 +18,7 @@ const ScanToSeeMenuApp = () => {
   const [currentView, setCurrentView] = useState("landing");
   const [restaurants, setRestaurants] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  const  publicUrl = process.env.REACT_APP_PUBLIC_URL || window.location.origin;
   const [menuItems, setMenuItems] = useState([]);
   const [editingItem, setEditingItem] = useState(null); // object or null
   const [editingRestaurant, setEditingRestaurant] = useState(false);
@@ -363,7 +364,7 @@ const ScanToSeeMenuApp = () => {
               return (
                 <div className="flex flex-col items-center gap-4">
                   <div id="qr-code-box" className="p-4 bg-gray-100 rounded inline-block">
-                    <QRCodeCanvas id="qr-code" value={qrUrl} size={220} level="H" includeMargin />
+                    <QRCodeCanvas id="qr-code" value={publicUrl} size={220} level="H" includeMargin />
                   </div>
 
                   {!isReadyForQR ? (
