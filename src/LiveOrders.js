@@ -1,4 +1,5 @@
 import React from 'react';
+import { X } from './Icons';
 
 const LiveOrders = ({ liveOrders, setCurrentView, acceptOrder, rejectOrder, serveOrder }) => {
     return (
@@ -20,17 +21,13 @@ const LiveOrders = ({ liveOrders, setCurrentView, acceptOrder, rejectOrder, serv
                             <div className="flex-grow">
                                 <div className="flex justify-between items-center mb-2">
                                     <h3 className="font-bold text-lg">Table {order.tableId}</h3>
-                                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${order.status === 'new' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                                        {order.status}
-                                    </span>
+                                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${order.status === 'new' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>{order.status}</span>
                                 </div>
                                 <p className="text-xs text-gray-500 mb-2">
                                     Ordered at: {order.createdAt?.toDate().toLocaleTimeString()}
                                 </p>
                                 <ul className="list-disc list-inside text-sm space-y-1 mb-4">
-                                    {order.items.map((item, index) => (
-                                        <li key={index}>{item.name} - ₹{item.price}</li>
-                                    ))}
+                                    {order.items.map((item, index) => ( <li key={index}>{item.name} - ₹{item.price}</li> ))}
                                 </ul>
                             </div>
                             <div className="mt-auto pt-4 border-t space-y-2">
@@ -54,5 +51,4 @@ const LiveOrders = ({ liveOrders, setCurrentView, acceptOrder, rejectOrder, serv
         </div>
     );
 };
-
 export default LiveOrders;

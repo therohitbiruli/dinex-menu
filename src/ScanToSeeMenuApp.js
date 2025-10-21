@@ -2,13 +2,13 @@ import React from 'react';
 import { db } from './firebase';
 import { doc, getDoc, setDoc, collection, query, where, orderBy, onSnapshot, updateDoc } from "firebase/firestore";
 import toast, { Toaster } from 'react-hot-toast';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-// Import the new components
 import LiveOrders from './LiveOrders';
 import ManagementPanel from './ManagementPanel';
-import { Menu, Eye, X } from './Icons'; // <-- CORRECT IMPORT
+import { Menu, Eye, X } from './Icons'; 
 
-// Helper Components that are only used here
+
 const QRCodeComponent = ({ value, size = 200 }) => {
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(value)}`;
     return ( <img src={qrCodeUrl} alt="QR Code" width={size} height={size} className="border-2 border-gray-300 rounded" /> );
@@ -76,8 +76,8 @@ const MenuItemForm = ({ item, onSave, onCancel, categories }) => {
 };
 
 const ScanToSeeMenuApp = () => {
-  const [currentView, setCurrentView] = React.useState("landing");
-  const [selectedRestaurant, setSelectedRestaurant] = React.useState(null);
+    const [currentView, setCurrentView] = React.useState("landing");
+    const [selectedRestaurant, setSelectedRestaurant] = React.useState(null);
     const [menuItems, setMenuItems] = React.useState([]);
     const [editingItem, setEditingItem] = React.useState(null);
     const [editingRestaurant, setEditingRestaurant] = React.useState(false);
@@ -165,7 +165,7 @@ const ScanToSeeMenuApp = () => {
                 <p className="text-2xl mb-8 font-medium">The Future of Restaurant Menus</p>
                 <div className="flex flex-col md:flex-row gap-4 justify-center">
                     <button onClick={() => setCurrentView("panel")} className="bg-yellow-400 text-purple-900 px-8 py-3 rounded-full font-bold shadow hover:scale-105 transition"> Management Panel </button>
-                    <button onClick={() => setCurrentView("menu")} className="bg-transparent border-2 border-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-purple-800 transition"> View Menu </button>
+                    <a href="#/menu" target="_blank" rel="noopener noreferrer" className="bg-transparent border-2 border-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-purple-800 transition"> View Guest Menu </a>
                 </div>
             </div>
         </div>
@@ -195,11 +195,10 @@ const ScanToSeeMenuApp = () => {
 
     const renderContent = () => {
         const panelProps = {
-            setCurrentView, liveOrders, handleSave, selectedRestaurant, setSelectedRestaurant, editingRestaurant, setEditingRestaurant,
+            setCurrentView, liveOrders, handleSave, selectedRestaurant, setSelectedRestaurant: (val) => setSelectedRestaurant(val), editingRestaurant, setEditingRestaurant,
             updateRestaurant, newCategoryInput, setNewCategoryInput, categories, setCategories, menuItems,
             setMenuItems, handleOnDragEnd, setEditingItem, viewingImage, setViewingImage, deleteMenuItem,
-            qrTableNumber, setQrTableNumber, isReadyForQR: (selectedRestaurant?.name?.trim() && categories.length > 0 && menuItems.length > 0), 
-            customerMenuUrl: generateCustomerMenuUrl(qrTableNumber), QRCodeComponent, downloadQRCode
+            qrTableNumber, setQrTableNumber, generateCustomerMenuUrl, QRCodeComponent, downloadQRCode
         };
         switch (currentView) {
             case 'landing': return renderLandingPage();
